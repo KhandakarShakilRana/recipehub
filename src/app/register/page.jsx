@@ -1,5 +1,5 @@
 "use client";
-
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Card,
@@ -11,18 +11,26 @@ import {
 } from "@heroui/react";
 
 export default function WithForm() {
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const data = {};
-    console.log(data);
+    const name = formData.get("name");
+  const email = formData.get("email");
+  const password = formData.get("password");
 
-    formData.forEach((value, key) => {
-      data[key] = value.toString();
-    });
+    const { data, error } = await authClient.signUp.email({
+    name,
+    email,
+    password,
+  });
+  if (error) {
+    alert(error.message);
+    return;
+  }
 
     alert("Form submitted successfully!");
+     router.push("/login");
   };
 
   return (
