@@ -1,40 +1,39 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  Label,
-  Link,
-  TextField,
-} from "@heroui/react";
+import { Description, Label, Radio, RadioGroup } from "@heroui/react";
+import { Button, Card, Form, Input, Link, TextField } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function WithForm() {
-    const router = useRouter();
+
+  const router = useRouter();
+   const [role, setRole] = useState("general");
   const onSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name");
-  const email = formData.get("email");
-  const password = formData.get("password");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const image = formData.get("image");
+   
 
     const { data, error } = await authClient.signUp.email({
-    name,
-    email,
-    image,
-    password,
-  });
-  if (error) {
-   toast.success(error.message);
-    return;
-  }
+      name,
+      email,
+      image,
+      password,
+      role,
+    });
+    if (error) {
+      toast.success(error.message);
+      return;
+    }
 
     toast.success("Registration successful!");
-     window.location.href = "/login";
+    window.location.href = "/";
   };
 
   return (
@@ -43,7 +42,7 @@ export default function WithForm() {
       <div className="flex items-center justify-center p-6">
         <Card className="w-full max-w-md">
           <Card.Header>
-            <Card.Title>Login</Card.Title>
+            <Card.Title>Create An Account</Card.Title>
             <Card.Description>
               Enter your credentials to access your account
             </Card.Description>
@@ -61,23 +60,48 @@ export default function WithForm() {
                 </TextField>
                 <TextField name="email" type="email">
                   <Label>Email</Label>
+                  <Input placeholder="email@example.com" variant="secondary" />
+                </TextField>
+                <TextField name="image" type="url">
+                  <Label>Profile Image URL</Label>
                   <Input
-                    placeholder="email@example.com"
+                    placeholder="https://example.com/avatar.jpg"
                     variant="secondary"
                   />
                 </TextField>
-                <TextField name="image" type="url">
-  <Label>Profile Image URL</Label>
-  <Input
-    placeholder="https://example.com/avatar.jpg"
-    variant="secondary"
-  />
-</TextField>
 
                 <TextField name="password" type="password">
                   <Label>Password</Label>
                   <Input placeholder="••••••••" variant="secondary" />
                 </TextField>
+
+                {/* role selecyion  */}
+                <div className="flex flex-col gap-4">
+                  <Label>Select Your Role</Label>
+                  <RadioGroup
+                   onChange= {value =>setRole(value)}
+                    defaultValue="general"
+                    name="role"
+                    orientation="horizontal"
+                  >
+                    <Radio value="general">
+                      <Radio.Content>
+                        <Radio.Control>
+                          <Radio.Indicator />
+                        </Radio.Control>
+                        General
+                      </Radio.Content>
+                    </Radio>
+                    <Radio value="admin">
+                      <Radio.Content>
+                        <Radio.Control>
+                          <Radio.Indicator />
+                        </Radio.Control>
+                        Admin
+                      </Radio.Content>
+                    </Radio>
+                  </RadioGroup>
+                </div>
               </div>
             </Card.Content>
 
@@ -87,7 +111,7 @@ export default function WithForm() {
               </Button>
 
               <Link className="text-center underline text-sm" href="/login">
-               Already have an account?
+                Already have an account?
               </Link>
             </Card.Footer>
           </Form>
