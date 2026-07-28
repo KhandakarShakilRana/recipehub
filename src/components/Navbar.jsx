@@ -38,14 +38,14 @@ function Navbar() {
               )}
             </svg>
           </button>
-          <div>RecipeHub</div>
+          <div><Link href="/#">RecipeHub</Link></div>
         </div>
         <ul className="hidden items-center gap-4 md:flex">
           <li>
-            <Link href="#">Login</Link>
+            <Link href="/login">Login</Link>
           </li>
           <li>
-            <Link className="bg-white py-2 px-4 text-black" href="#">SignUp</Link>
+            <Link className="bg-white py-2 px-4 text-black" href="register">SignUp</Link>
           </li>
         </ul>
       </header>
@@ -53,12 +53,12 @@ function Navbar() {
         <div className="border-t border-separator md:hidden">
           <ul className="flex flex-col gap-2 p-4">
             <li>
-              <Link href="#" className="block py-2">
+              <Link href="/login" className="block py-2">
                 Login
               </Link>
             </li>
             <li>
-              <Link href="#" className="block py-2">
+              <Link href="/register" className="block py-2">
                 SignUp
               </Link>
             </li>
