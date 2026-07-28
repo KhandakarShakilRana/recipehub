@@ -1,9 +1,20 @@
 "use client"
 import { useState } from "react";
 import { Link, Button } from "@heroui/react";
+import { authClient, useSession } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {data : session , isPending} = useSession();
+  const router = useRouter();
+  const handleSignOut = async () => {
+    await authClient.signOut();
+         // Refresh server components/session
+    window.location.href = "/login";
+    
+  };
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
@@ -41,27 +52,79 @@ function Navbar() {
           <div><Link href="/#">RecipeHub</Link></div>
         </div>
         <ul className="hidden items-center gap-4 md:flex">
+          {session?.user ? (
+        <>
+          <li>
+           <img
+  src={session?.user?.image || "/default-avatar.png"}
+  alt={session?.user?.name || "Profile"}
+  className="h-10 w-10 rounded-full object-cover"
+  referrerPolicy="no-referrer"
+/>
+          </li>
+
+          <li>
+            <Link
+              onClick={handleSignOut}
+              className="rounded bg-red-500 px-4 py-2 text-white"
+            >
+              Sign Out
+            </Link>
+          </li>
+        </>
+      ) : (
+        <>
           <li>
             <Link href="/login">Login</Link>
           </li>
+
           <li>
-            <Link className="bg-white py-2 px-4 text-black" href="register">SignUp</Link>
+            <Link
+              href="/register"
+              className="bg-white px-4 py-2 text-black"
+            >
+              Sign Up
+            </Link>
           </li>
+        </>
+      )}
         </ul>
       </header>
       {isMenuOpen && (
         <div className="border-t border-separator md:hidden">
           <ul className="flex flex-col gap-2 p-4">
             <li>
-              <Link href="/login" className="block py-2">
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link href="/register" className="block py-2">
-                SignUp
-              </Link>
-            </li>
+           <Link className='mb-4' href="/browse-recipe">Browse Recipe</Link>
+          </li>
+            {session?.user ? (
+        <>
+          
+
+          <li>
+            <Link
+              onClick={handleSignOut}
+              className="rounded bg-red-500 px-4 py-2 text-white"
+            >
+              Sign Out
+            </Link>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link href="/login">Login</Link>
+          </li>
+
+          <li>
+            <Link
+              href="/register"
+              className="bg-white px-4 py-2 text-black"
+            >
+              Sign Up
+            </Link>
+          </li>
+        </>
+      )}
           </ul>
         </div>
       )}

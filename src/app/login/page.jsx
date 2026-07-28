@@ -1,5 +1,5 @@
 "use client";
-
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Card,
@@ -9,20 +9,31 @@ import {
   Link,
   TextField,
 } from "@heroui/react";
+import { router } from "better-auth/api";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function WithForm() {
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const data = {};
-
-    formData.forEach((value, key) => {
-      data[key] = value.toString();
+  const router = useRouter();
+  const onSubmit = async (e) => {
+      e.preventDefault();
+  
+      const formData = new FormData(e.currentTarget);
+    const email = formData.get("email");
+    const password = formData.get("password");
+  
+      const { data, error } = await authClient.signIn.email({
+      email,
+      password,
     });
-
-    alert("Form submitted successfully!");
-  };
+    if (error) {
+     toast.success(error.message);
+      return;
+    }
+  
+      toast.success("Login successful!");
+       window.location.href = "/";
+    };
 
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[70%_30%]">

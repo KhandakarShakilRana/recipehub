@@ -9,8 +9,11 @@ import {
   Link,
   TextField,
 } from "@heroui/react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function WithForm() {
+    const router = useRouter();
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,15 +25,16 @@ export default function WithForm() {
     const { data, error } = await authClient.signUp.email({
     name,
     email,
+    image,
     password,
   });
   if (error) {
-    alert(error.message);
+   toast.success(error.message);
     return;
   }
 
-    alert("Form submitted successfully!");
-     router.push("/login");
+    toast.success("Registration successful!");
+     window.location.href = "/login";
   };
 
   return (
@@ -62,7 +66,13 @@ export default function WithForm() {
                     variant="secondary"
                   />
                 </TextField>
-                
+                <TextField name="image" type="url">
+  <Label>Profile Image URL</Label>
+  <Input
+    placeholder="https://example.com/avatar.jpg"
+    variant="secondary"
+  />
+</TextField>
 
                 <TextField name="password" type="password">
                   <Label>Password</Label>
