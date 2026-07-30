@@ -93,9 +93,7 @@ function Navbar() {
       {isMenuOpen && (
         <div className="border-t border-separator md:hidden">
           <ul className="flex flex-col gap-2 p-4">
-            <li>
-           <Link className='mb-4' href="/browse-recipe">Browse Recipe</Link>
-          </li>
+            
             {session?.user ? (
         <>
           

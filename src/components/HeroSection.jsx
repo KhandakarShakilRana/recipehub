@@ -27,6 +27,11 @@ export default function HeroSection() {
               Add Recipe
             </button>
           </Link>
+          <Link href="/recipe">
+            <button className="bg-[#E4A951] ml-4 hover:bg-[#d63d18] text-white font-semibold px-4 py-2 md:px-6 md:py-3 rounded-lg shadow-lg transition-all duration-300 hover:scale-105">
+              Browse Recipe
+            </button>
+          </Link>
         </div>
 
       </div>
