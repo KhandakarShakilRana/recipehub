@@ -1,5 +1,6 @@
 "use client";
 
+import LikeButton from "@/components/LikeButton";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
@@ -36,6 +37,7 @@ export default function Home() {
   return (
     <main className="max-w-7xl mx-auto px-4 py-10">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+        
   {recipes.map((recipe) => (
     <Link
       href={`/recipe/${recipe._id}`}
@@ -77,11 +79,13 @@ export default function Home() {
           <span className="text-xs text-gray-500">
             {new Date(recipe.createdAt).toLocaleDateString()}
           </span>
+          
         </div>
       </div>
     </Link>
   ))}
 </div>
+
     </main>
   );
 }

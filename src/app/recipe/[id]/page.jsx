@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { FaHeart, FaArrowLeft } from "react-icons/fa";
+import LikeButton from "@/components/LikeButton";
 
 export default async function RecipeDetails({ params }) {
   const { id } = await params;
@@ -64,6 +65,7 @@ export default async function RecipeDetails({ params }) {
 
         {/* Details */}
         <div>
+            
           <h1 className="text-5xl font-bold mb-4">{recipe.recipeName}</h1>
 
           <div className="flex gap-8 mb-8">
@@ -74,7 +76,10 @@ export default async function RecipeDetails({ params }) {
 
             <div>
               <p className="text-gray-500 text-sm">Likes</p>
-              <h2 className="text-3xl font-bold">❤️ {recipe.likes}</h2>
+              <h2 className="text-sm font-bold"><LikeButton
+  recipeId={recipe._id}
+  initialLikes={recipe.likes}
+/></h2>
             </div>
           </div>
 
