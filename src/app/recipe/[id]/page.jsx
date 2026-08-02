@@ -1,7 +1,10 @@
+
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { FaHeart, FaArrowLeft } from "react-icons/fa";
 import LikeButton from "@/components/LikeButton";
+import ReportModal from "@/components/ReportModal";
+
 
 export default async function RecipeDetails({ params }) {
   const { id } = await params;
@@ -81,6 +84,7 @@ export default async function RecipeDetails({ params }) {
   initialLikes={recipe.likes}
 /></h2>
             </div>
+           
           </div>
 
           <h3 className="text-xl font-semibold mb-3">Nutrition</h3>
@@ -91,7 +95,11 @@ export default async function RecipeDetails({ params }) {
 
           <h3 className="text-xl font-semibold mb-3">Procedure</h3>
           <p className="whitespace-pre-line">{recipe.procedure}</p>
+          
         </div>
+        <ReportModal recipeId={recipe._id}></ReportModal>
+        
+         
       </div>
 
       <section className="mt-20">
