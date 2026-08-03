@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const res = await fetch("http://localhost:5000/recipe");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipe`);
         const data = await res.json();
 
         setRecipes(data);

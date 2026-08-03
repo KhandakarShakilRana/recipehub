@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaHeart, FaArrowLeft } from "react-icons/fa";
 import LikeButton from "@/components/LikeButton";
 import ReportModal from "@/components/ReportModal";
+import SaveButton from "@/components/SaveButton";
 
 
 export default async function RecipeDetails({ params }) {
@@ -12,7 +13,7 @@ export default async function RecipeDetails({ params }) {
   // 1. Fetch current recipe safely
   let recipe = null;
   try {
-    const res = await fetch(`http://localhost:5000/recipe/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipe/${id}`, {
       cache: "no-store",
     });
 
@@ -30,7 +31,7 @@ export default async function RecipeDetails({ params }) {
   // 2. Fetch all recipes for "You May Also Like" safely
   let recipes = [];
   try {
-    const allRes = await fetch("http://localhost:5000/recipe", {
+    const allRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipe`, {
       cache: "no-store",
     });
 
@@ -79,10 +80,12 @@ export default async function RecipeDetails({ params }) {
 
             <div>
               <p className="text-gray-500 text-sm">Likes</p>
-              <h2 className="text-sm font-bold"><LikeButton
+              <h2 className="text-sm flex gap-2 font-bold"><LikeButton
   recipeId={recipe._id}
   initialLikes={recipe.likes}
-/></h2>
+/><SaveButton
+    recipeId={recipe._id}
+  /></h2>
             </div>
            
           </div>
@@ -97,6 +100,7 @@ export default async function RecipeDetails({ params }) {
           <p className="whitespace-pre-line">{recipe.procedure}</p>
           
         </div>
+        
         <ReportModal recipeId={recipe._id}></ReportModal>
         
          

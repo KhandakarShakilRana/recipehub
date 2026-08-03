@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default async function HomeSections() {
-  const res = await fetch("http://localhost:5000/recipe", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipe`, {
     cache: "no-store",
   });
 

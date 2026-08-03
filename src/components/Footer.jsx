@@ -1,9 +1,17 @@
 // components/Footer.tsx
-
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Hide footer on dashboard pages
+  if (pathname.startsWith("/dashboard")) {
+    return null;
+  }
+  
   return (
     <footer className="bg-[#efefef] ">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-14">

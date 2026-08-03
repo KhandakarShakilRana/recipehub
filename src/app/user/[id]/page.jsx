@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 export default async function UserProfile({ params }) {
   const { id } = await params;
 
-  const userRes = await fetch(`http://localhost:5000/user/${id}`, {
+  const userRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`, {
     cache: "no-store",
   });
 
@@ -15,7 +15,7 @@ export default async function UserProfile({ params }) {
 
   const user = await userRes.json();
 
-  const recipeRes = await fetch("http://localhost:5000/recipe", {
+  const recipeRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipe`, {
     cache: "no-store",
   });
 

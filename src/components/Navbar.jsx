@@ -54,23 +54,55 @@ function Navbar() {
         <ul className="hidden items-center gap-4 md:flex">
           {session?.user ? (
         <>
-          <li>
-           <img
-  src={session?.user?.image || "/default-avatar.png"}
-  alt={session?.user?.name || "Profile"}
-  className="h-10 w-10 rounded-full object-cover"
-  referrerPolicy="no-referrer"
-/>
-          </li>
+          <li className="relative group list-none">
 
-          <li>
-            <Link
-              onClick={handleSignOut}
-              className="rounded bg-red-500 px-4 py-2 text-white"
-            >
-              Sign Out
-            </Link>
-          </li>
+  {/* Profile Image */}
+  <img
+    src={session?.user?.image || "/default-avatar.png"}
+    alt={session?.user?.name || "Profile"}
+    referrerPolicy="no-referrer"
+    className="h-10 w-10 rounded-full object-cover cursor-pointer border-2 border-transparent group-hover:border-yellow-400 transition"
+  />
+
+  {/* Dropdown */}
+  <div className="absolute right-0 mt-3 w-52 rounded-lg bg-white shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+
+    {/* User Info */}
+    <div className="px-4 py-3 border-b">
+      <p className="font-semibold text-black">
+        {session?.user?.name}
+      </p>
+
+      <p className="text-xs text-gray-500 truncate">
+        {session?.user?.email}
+      </p>
+    </div>
+
+    {/* Menu */}
+    <Link
+      href={`/user/${session?.user?.id}`}
+      className="block px-4 py-3 text-gray-700 hover:bg-gray-100"
+    >
+      👤 Profile
+    </Link>
+
+    <Link
+      href="/dashboard"
+      className="block px-4 py-3 text-gray-700 hover:bg-gray-100"
+    >
+      📊 Dashboard
+    </Link>
+
+    <button
+      onClick={handleSignOut}
+      className="w-full text-left px-4 py-3 text-red-500 hover:bg-red-50 cursor-pointer"
+    >
+      🚪 Sign Out
+    </button>
+
+  </div>
+
+</li>
         </>
       ) : (
         <>

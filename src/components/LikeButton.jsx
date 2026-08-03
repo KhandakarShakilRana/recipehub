@@ -16,7 +16,7 @@ export default function LikeButton({ recipeId, initialLikes }) {
     if (!session?.user?.id) return;
 
     fetch(
-      `http://localhost:5000/likes/check?recipeId=${recipeId}&userId=${session.user.id}`
+      `${process.env.NEXT_PUBLIC_API_URL}/likes/check?recipeId=${recipeId}&userId=${session.user.id}`
     )
       .then((res) => res.json())
       .then((data) => setLiked(data.liked));
@@ -39,7 +39,7 @@ export default function LikeButton({ recipeId, initialLikes }) {
 
     try {
       if (!liked) {
-        const res = await fetch("http://localhost:5000/likes", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/likes`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export default function LikeButton({ recipeId, initialLikes }) {
           setLikes((prev) => prev + 1);
         }
       } else {
-        const res = await fetch("http://localhost:5000/likes", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/likes`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
