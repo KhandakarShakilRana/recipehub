@@ -1,6 +1,6 @@
 "use server"
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+const baseUrl = process.env.NEXT_PUBLIC_API_URL
 
 export const createRecipe = async(newRecipeData)=>{
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipe`,{
